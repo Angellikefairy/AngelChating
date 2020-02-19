@@ -9,7 +9,9 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
     "sourceMap": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "types": [
       "webpack-env"
@@ -28,6 +30,8 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.*.ts",
+    "src/types/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
