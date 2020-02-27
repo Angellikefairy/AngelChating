@@ -3,7 +3,7 @@
     <el-dialog :visible.sync="dialogVisible" center @close="onClose">
         <div id="slotHeader" slot="title">
             <el-avatar fit="contain" :size="60" :src="targetMes.avatar">
-                <img src="//cdn.suisuijiang.com/fiora/avatar/11.jpg?imageView2/3/w/88/h/88"/>
+                <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
             </el-avatar>
             <p>{{targetMes.name}}</p>
         </div>
