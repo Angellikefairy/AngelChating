@@ -61,7 +61,6 @@ export default class ChatMessage extends Vue {
             name,
             dialogType: messageType
         }
-        console.log(targetMes);
         this.$emit('update:dialogVisible',!dialogVisible);
         this.$emit('update:targetMes',targetMes);
     }

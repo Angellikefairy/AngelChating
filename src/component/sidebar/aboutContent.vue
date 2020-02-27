@@ -28,6 +28,7 @@
                     另外，还有一些使用Html5的有趣的API实现的功能：
                     <ul>
                         <li>桌面消息通知（通过Notification进行实现）</li>
+                        <li>Web截图（通过Canvas进行实现，但是由于Canvas.getImageData会获取页面隐藏信息，因此，截图效果并不理想）</li>
                     </ul>
                 </p>
             </el-collapse-item>
@@ -37,6 +38,8 @@
                     <ul>
                         <li>Enter: 发送消息（在输入框为聚焦状态下）</li>
                         <li>Alt + q/Q: 退出登录</li>
+                        <li>Alt + A: 截图</li>
+                        <li>Esc: 退出截屏；退出表情选取；</li>
                     </ul>
                 </p>
             </el-collapse-item>

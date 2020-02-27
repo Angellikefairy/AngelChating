@@ -44,7 +44,6 @@ export default class LinkmanList extends Vue {
         const groupListPromise = getGroupList(this.userId);
         const friendsListPromise = getFriendsList(this.userId);
         const linkmanList = await Promise.all([groupListPromise,friendsListPromise]);
-        console.log(linkmanList);
         linkmanList.forEach(linkman => {
             const data = linkman.data;
             if(!data) {
@@ -56,7 +55,6 @@ export default class LinkmanList extends Vue {
             if(data.friendsList) {
                 this.linkmanList = {...this.linkmanList,...data.friendsList}
             }
-            console.log(this.linkmanList);
         })
     }
 

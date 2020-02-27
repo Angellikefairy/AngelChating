@@ -1,6 +1,6 @@
 <template>
   <div :id="dialogMes.dialogTargetId" :class="{dialogFocus: focusState,'dialog-item': true}" @click="onFocus">
-    <el-avatar id="item-avatar" fit="contain" :size="48" :src="dialogMes.avatar" @error="errorHandler">
+    <el-avatar id="item-avatar" fit="contain" :size="48" :src="dialogMes.avatar">
       <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
     </el-avatar>
     <div id="dialog-mes">
@@ -51,9 +51,7 @@ export default class dialogItem extends Vue {
         })
     }
 
-    errorHandler(e) {
-        //console.log(e);
-    }
+
 
     get dialogTime(): string {
         return resolveTime(this.dialogMes.lastMessage.message_created_time,'');     

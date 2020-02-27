@@ -64,7 +64,6 @@ export default class AddFriendDialog extends Vue {
         const friends = (await getFriendsList(userId)).data;
         if(friends) {
             const frinedsMes = Object.values(friends.friendsList).flat();
-            console.log(frinedsMes);
             this.$store.commit('setFriendsMes',frinedsMes);
         }
     }
@@ -87,7 +86,6 @@ export default class AddFriendDialog extends Vue {
             targetUserName,
             validation
         },(data)=> {
-            console.log(data);
             const {targetUserMes} = data.data;
             this.$store.commit('addFriendMes',targetUserMes);
             this.dialogVisible = !this.dialogVisible;

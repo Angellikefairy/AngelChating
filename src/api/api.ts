@@ -145,3 +145,10 @@ export const getGroupMembers = (
 ) => fetch('get', 'groupMembers', {
     groupId
 })
+/**
+ * 上传文件
+ * @param file 
+ */
+export const uploadFile = (
+    fileFormData
+) => fetch('post', 'upload', fileFormData)

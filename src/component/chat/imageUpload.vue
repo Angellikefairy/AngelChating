@@ -27,9 +27,7 @@ import {baseUrl} from "@/config/env"
 export default class ImageUpload extends Vue {
   uploadUrl: string = baseUrl + 'upload';
 
-  handleProgress(event, file, fileList) {
-    //console.log(event,file,fileList);
-  }
+
   handleError(err, file, fileList) {
     this.$message({
       type: 'error',

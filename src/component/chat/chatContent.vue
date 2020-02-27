@@ -90,7 +90,6 @@ export default class ChatContent extends Vue {
             if(this.init.get(this.focusTargetId) || this.$store.state.scrollDown) {
                 this.$nextTick(()=>{
                     const element: Element = this.$el;
-                    console.log(11111);
                     element.scrollTop = element.scrollHeight - element.clientHeight;
                     this.init.set(this.focusTargetId,false);
                 })
