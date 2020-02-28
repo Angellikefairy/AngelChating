@@ -1,7 +1,7 @@
 <template>
   <div id="chating">
     <!--设置毛玻璃效果 通过filter: blur() -->
-    <div id="back-blur"></div>
+    <div id="back-blur" :style="appBackgroundImage"></div>
     <sidebar></sidebar>
     <list></list>
     <keep-alive>
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {Vue,Component} from "vue-property-decorator";
+import {Vue,Component,Inject} from "vue-property-decorator";
 import sidebar from '../component/sidebar/sidebar.vue';
 import list from '../component/searchBarAndFriendsList/searchBarAndFriendsList.vue';
 import chat from '../component/chat/chat.vue';
@@ -21,6 +21,7 @@ import client from 'socket.io-client';
 import {Socket} from 'socket.io';
 import {onConnectMessage} from '../api/websocket';
 import {disconnnect} from "../service/websocket.service"
+import {showMessage} from "@/util/util";
 
 
 import {loginByToken,logout as tryLogout} from '../service/user.service';
@@ -38,6 +39,7 @@ import {getPreferSetting} from "@/api/api";
 })
 export default class Chating extends Vue {
     socket: any;
+
     logout() {
       const userId = this.$store.state.userBasicMes.user_id;
       tryLogout(this,userId);
@@ -55,6 +57,13 @@ export default class Chating extends Vue {
       const userBasicMes = this.$store.state.userBasicMes;
       this.setNotification(userBasicMes);
       return userBasicMes;
+    }
+
+      get appBackgroundImage() {
+        const bg = this.$store.state.randomBackgroundImage;
+        return {
+          backgroundImage: "url(" + require(`../assets/${bg}.jpg`) + ")"
+        };
     }
 
     /**
@@ -88,20 +97,12 @@ export default class Chating extends Vue {
         }
       }
       if(!supportNotification) {
-        this.$message({
-          type: 'warning',
-          message: '当前浏览器不支持桌面消息通知。为了您更好的用户体验，推荐使用Chrome和Firefox'
-        })
+        showMessage(this,'warning','当前浏览器不支持桌面消息通知。为了您更好的用户体验，推荐使用Chrome和Firefox',0,true);
       }
       else {
         const permission = await setNotifiPermitted();
         if(permission === 'denied') {
-          this.$message({
-            type: 'warning',
-            message: '开启通知后可以支持桌面消息通知，您之后可以在 应用设置/浏览器设置 中重新进行设置!',
-            showClose: true,
-            duration: 0
-          })
+          showMessage(this,'warning','开启通知后可以支持桌面消息通知，您之后可以在 应用设置/浏览器设置 中重新进行设置!',0,true);
         }
       }
     }
@@ -123,8 +124,8 @@ export default class Chating extends Vue {
     overflow: hidden;
 }
 #back-blur {
-  background: url(../assets/background.jpg) no-repeat;
-  background-size: 1920px 1080px;
+  background-repeat: no-repeat;
+  background-size: 1920 1080 cover;
   background-position: -230.4px -15.2px;
   width: 70%;
   height: 90%;

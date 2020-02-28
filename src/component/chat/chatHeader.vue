@@ -3,7 +3,7 @@
         <div id="chat-name">
             <p>{{chatName}}</p>
         </div>
-        <div id="chat-setting" v-show="svgDisplay">
+        <div id="chat-setting" v-show="svgDisplay" @click="showGroupSetting">
             <svg viewBox="0 0 24 24"><g><path d="M12 18.042c-.553 0-1-.447-1-1v-5.5c0-.553.447-1 1-1s1 .447 1 1v5.5c0 .553-.447 1-1 1z"></path><circle cx="12" cy="8.042" r="1.25"></circle><path d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path></g></svg>
         </div>
     </div>
@@ -12,6 +12,7 @@
 <script lang="ts">
 import "reflect-metadata";
 import {Vue,Component,Prop} from "vue-property-decorator";
+import {showMessage} from "@/util/util";
 
 @Component
 export default class ChatHeader extends Vue {
@@ -33,9 +34,20 @@ export default class ChatHeader extends Vue {
     get svgDisplay() {
         const display = this.display;
         if(display === undefined) {
-            return true;
+            if(this.loginState) {
+                return true;
+            }
+            else return false;
         }
         else return display;
+    }
+
+    get loginState() {
+        return this.$store.state.loginState;
+    }
+
+    showGroupSetting() {
+        showMessage(this,'info','群聊设置功能还在研发中哦！',2000,true);
     }
 }
 </script>

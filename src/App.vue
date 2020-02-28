@@ -1,12 +1,24 @@
 <template>
-  <div id="app">
+  <div id="app" :style="appBackgroundImage">
     <router-view/>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {Vue,Component,ProvideReactive} from "vue-property-decorator";
 
+@Component
+export default class App extends Vue {
+  bgStyle: any;
+
+  get appBackgroundImage() {
+    const randomNum = Math.floor(Math.random()*23+1);
+    this.bgStyle = {
+        backgroundImage: "url(" + require(`./assets/${randomNum}.jpg`) + ")"
+    }
+    this.$store.commit('setRandombg',`${randomNum}`);
+    return this.bgStyle;
+  }
 }
 </script>
 
@@ -29,8 +41,7 @@ html,body {
   justify-content: center;
   align-items: center;
   background-color: #e8e6f0;
-  background-image: url(./assets/background.jpg);
-  background-size: 1920px 1080px;
+  background-size: 1920px 1080px cover;
   background-repeat: no-repeat;
 }
 </style>

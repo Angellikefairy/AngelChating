@@ -233,5 +233,8 @@ export default {
      */
     addFriendMes(state,friendMes) {
         state.friendsMes.push(friendMes);
+    },
+    setRandombg(state,bg) {
+        state.randomBackgroundImage = bg;
     }
 }

@@ -4,6 +4,7 @@ import {socketUrl} from "../config/env";
 import {getDialogList,updateDialogList} from '../service/dialog.service';
 import {addNewMessage} from "../service/message.service"
 import { Socket } from 'socket.io';
+import {showMessage} from "@/util/util";
 
 
 /**
@@ -93,11 +94,7 @@ export function addFriendInfo(socket: Socket,app) {
   } = (store.state as any);
     const {fromUserName,fromUserAvatar} = data;
     getDialogList(userId);
-    app.$message({
-      duration: 0,
-      showClose: true,
-      message: `${fromUserName} 发来了一条好友请求，
-                系统默认为您自动同意该请求！快去和他聊天吧！`
-    })
+    showMessage(app,'info',`${fromUserName} 发来了一条好友请求，
+    系统默认为您自动同意该请求！快去和他聊天吧！`,0,true);
   })
 }

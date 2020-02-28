@@ -5,6 +5,8 @@ import {
     logout as userLogout
 } from "../api/api"
 
+import {showMessage} from "@/util/util";
+
 import {
     resetDialogList
 } from "./dialog.service"
@@ -22,17 +24,13 @@ import store from "../store/index"
 export async function register(app: Vue,userName: string,password: string) {
     const registerMes = await userRegister(userName,password);
     if(registerMes.data) {
-        app.$message({
-            message: '注册成功！正为您自动登录！',
-            type: 'success',
-            duration: 1500,
-            onClose:() => {
-                loginByPassword(app,userName,password);
-            }
-        })
+        const onClose = () => {
+            loginByPassword(app,userName,password);
+        }
+        showMessage(app,'success','注册成功！正为您自动登录！',1500,false,onClose);
     }
     else {
-        app.$message.error(registerMes.message+`! 请重新进行注册!`);
+        showMessage(app,'error',`${registerMes.message}! 请重新进行注册!`);
     }
 }
 
@@ -40,13 +38,14 @@ export async function register(app: Vue,userName: string,password: string) {
 export async function loginByPassword(app: Vue,userName: string,password: string) {
     const loginMes = await userLogin(userName,password);
     if(loginMes.data) {
+        showMessage(app,'success','登录成功!');
         const {/*message,*/accessToken,userBasicMes} = loginMes.data;
         app.$router.push('/');
         store.commit('loginSucceed',userBasicMes);
         localStorage.setItem('Token',accessToken);
     }
     else {
-        app.$message.error(loginMes.message+`! 请重新进行登录!`);
+        showMessage(app,'error',`${loginMes.message}!`,0,true);
     }
 }
 
@@ -60,7 +59,7 @@ export async function loginByToken(app: Vue) {
             store.commit('loginSucceed',userBasicMes);
         }
         else {
-            app.$message.error(loginMes.message+`! 请重新进行登录!`);
+            showMessage(app,'error',`${loginMes.message}!`,0,true);
         }
     }
 }
@@ -73,11 +72,7 @@ export async function logout(app: Vue,userId: string) {
         store.commit('setFocusLinkman',{});
         store.commit('setSidebarChosen','dialogList');
         store.commit('setFriendsMes',[]);
-        app.$message({
-            message: '您已成功退出登录',
-            type: 'success',
-            duration: 1500
-        })
+        showMessage(app,'success','您已成功退出登录',1500);
         disconnnect();
         localStorage.removeItem('Token');
         guestJoinDefaultGroup(app);

@@ -25,6 +25,7 @@ import {Vue,Component,Watch} from "vue-property-decorator";
 import chatHeader from "../chat/chatHeader.vue";
 import addFriendDialog from "../Friends/addFriendDialog.vue";
 import {getGroupMembers} from "@/api/api";
+import {showMessage} from "@/util/util";
 
 @Component({
   components: {
@@ -87,11 +88,7 @@ export default class GroupMes extends Vue {
       const groupId = groupMes.group_id;
       const groupMembers = (await getGroupMembers(groupId)).data;
       if(!groupMembers) {
-        this.$message({
-          type: 'warning',
-          message: '群组信息获取失败',
-          showClose: true
-        })
+        showMessage(this,'warning','群组信息获取失败',3000,true);
       }
       else {
         const {allGroupMembers} = this.$store.state;

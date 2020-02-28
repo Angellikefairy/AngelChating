@@ -3,7 +3,6 @@
     <el-upload
         class="upload-demo"
         :action="uploadUrl"
-        :on-progress="handleProgress"
         :on-error="handleError"
         :on-success="handleSuccess"
         :before-upload="beforeImageUpload"
@@ -21,7 +20,8 @@
 import "reflect-metadata"
 import {Vue,Component,Prop} from "vue-property-decorator";
 import {sendMessage} from "@/service/message.service";
-import {baseUrl} from "@/config/env"
+import {baseUrl} from "@/config/env";
+import {showMessage} from "@/util/util";
 
 @Component
 export default class ImageUpload extends Vue {
@@ -29,10 +29,7 @@ export default class ImageUpload extends Vue {
 
 
   handleError(err, file, fileList) {
-    this.$message({
-      type: 'error',
-      message: '图片上传失败，请重新上传或之后再试!'
-    })
+    showMessage(this,'error','图片上传失败，请重新上传或之后再试!')
   }
   handleSuccess(response, file, fileList) {
     const {data: {fileUrl: imageUrl}} = response;
@@ -40,10 +37,7 @@ export default class ImageUpload extends Vue {
     this.$store.commit('setImageLoading',false);
   }
   handleFileLimit(files, fileList) {
-    this.$message({
-      type: 'warning',
-      message: '您已经不被允许发送更多的文件'
-    })
+    showMessage(this,'warning','您已经不被允许发送更多的文件')
   }
   beforeImageUpload(file) {
     const imagepattern = /image\/(gif|jpeg|jpg|png|svg)/g;
@@ -51,10 +45,10 @@ export default class ImageUpload extends Vue {
     const isLt2M = file.size / 1024 / 1024 < 2;
 
     if (!isJPG) {
-      this.$message.error('您当前只能上传图片哦');
+      showMessage(this,'error','您当前只能上传图片哦',0,true)
     }
     else if (!isLt2M) {
-      this.$message.error('上传图片大小不能超过 2MB!');
+      showMessage(this,'error','上传图片大小不能超过 2MB!',0,true)
     }
     else {
       this.$store.commit('setImageLoading',true);

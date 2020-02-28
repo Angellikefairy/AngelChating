@@ -11,7 +11,7 @@ import {getDialogId} from "./dialog.service"
 import {Message} from "../interface/interface"
 
 import store from "../store/index"
-import {resolveTime,resolveEmoji} from "@/util/util"
+import {resolveTime,resolveEmoji,showMessage} from "@/util/util"
 
 /**
  * 获得历史消息
@@ -261,10 +261,7 @@ export function getFromMes(message) {
  */
 export function sendMessage(message: string,messageContentType = 'text',app) {
     if(message.length === 0) {
-        app.$message({
-            type: 'warning',
-            message: '您还没有输入任何内容哦!'
-        })
+        showMessage(app,'warning','您还没有输入任何内容哦!');
         return;
     }
     const {
@@ -301,11 +298,7 @@ export function sendMessage(message: string,messageContentType = 'text',app) {
         // 发送消息失败时的处理
         socket.once('messageException', err => {
             const {message} = err;
-            app.$message({
-                type: 'warning',
-                message,
-                showClose: true
-            })
+            showMessage(app,'warning',message,3000,true);
         })
     }
     else {

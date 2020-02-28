@@ -28,7 +28,9 @@ const state = {
   // 所有群组的所有成员信息（以群组ID为属性，以成员信息为属性值）
   allGroupMembers: {},
   // 所有好友的信息
-  friendsMes: []
+  friendsMes: [],
+  // 随机背景图片
+  randomBackgroundImage: ''
 }
 
 export default new Vuex.Store({

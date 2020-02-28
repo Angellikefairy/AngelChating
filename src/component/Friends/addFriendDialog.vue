@@ -20,6 +20,7 @@ import {AddFriendDialogTarget} from "@/types/friends/index";
 import { Socket } from 'socket.io';
 import {getDialogList} from "@/service/dialog.service";
 import {getFriendsList} from "@/api/api";
+import {showMessage} from "@/util/util";
 
 @Component
 export default class AddFriendDialog extends Vue {
@@ -90,20 +91,12 @@ export default class AddFriendDialog extends Vue {
             this.$store.commit('addFriendMes',targetUserMes);
             this.dialogVisible = !this.dialogVisible;
             getDialogList(fromUserId);
-            this.$message({
-                duration: 0,
-                showClose: true,
-                message: `您和 ${targetUserName} 已经是好友了，快来一起聊天吧!`,
-                type: 'success'
-            })
+            showMessage(this,'success',`您和 ${targetUserName} 已经是好友了，快来一起聊天吧!`,0,true);
         })
 
         socket.once('addFriendException',err => {
             const {message} = err;
-            this.$message({
-                message,
-                type: 'warning'
-            })
+            showMessage(this,'warning',message);
         })
     }
 }

@@ -7,11 +7,11 @@
     <div id="loginAndRegister-input">
         <div id="username-input">
             <label>Username</label>
-            <el-input class="input" type="text" autocomplete="new-password" v-model="userName" clearable></el-input>
+            <el-input class="input" type="text" autocomplete="new-password" v-model="userName" clearable @blur="checkNull(userName,'用户名')"></el-input>
         </div>
         <div id="password-input">
             <label>Password</label>
-            <el-input class="input" type="password" autocomplete="new-password" v-model="password" show-password></el-input>
+            <el-input class="input" type="password" autocomplete="new-password" v-model="password" show-password @keyup.enter.native="LoginAndRegister"></el-input>
         </div>
     </div>
     <el-button round id="button" :style="button.buttonStyle" @click="LoginAndRegister">{{button.buttonName}}</el-button>
@@ -24,7 +24,8 @@
 <script lang="ts">
 import 'reflect-metadata'
 import {Vue,Prop,Component} from 'vue-property-decorator';
-import {register,loginByPassword} from '@/service/user.service'
+import {register,loginByPassword} from '@/service/user.service';
+import {showMessage} from "@/util/util";
 
 @Component({})
 export default class LoginAndRegister extends Vue {
@@ -37,11 +38,25 @@ export default class LoginAndRegister extends Vue {
 
     LoginAndRegister(){
         if(this.state === 'register') {
+            if(this.userName === '' || this.password === '') {
+                showMessage(this,'warning','用户名或密码不允许为空哦!');
+                return;
+            }
             register(this,this.userName,this.password);
         }
         else {
+            const isNull = this.checkNull(this.password,'密码');
+            if(isNull) return;
             loginByPassword(this,this.userName,this.password);
         }
+    }
+
+    checkNull(value,key) {
+        if(value === '') {
+            showMessage(this,'warning',`${key}不允许为空哦！`);
+            return true;
+        }
+        else return false;
     }
 }
 </script>

@@ -1,5 +1,6 @@
 import {getPreferSetting,modifyPreferSetting} from "@/api/api";
-import store from "@/store/index"
+import store from "@/store/index";
+import {showMessage} from "@/util/util";
 
 export function getAgentPermission() {
     return Notification.permission;
@@ -51,12 +52,7 @@ export function resolveFirefox(app) {
         const userAgent = navigator.userAgent;
         const pattern = /Firefox\/(\S+)/g;
         if(pattern.test(userAgent)) {
-          app.$message({
-            type: 'warning',
-            message: 'Firefox浏览器默认阻止弹窗，如果您想开启消息通知功能，请前往浏览器设置中开启允许通知',
-            showClose: true,
-            duration: 0
-          })
+          showMessage(app,'warning','Firefox浏览器默认阻止弹窗，如果您想开启消息通知功能，请前往浏览器设置中开启允许通知',0,true);
         }
     }
 }

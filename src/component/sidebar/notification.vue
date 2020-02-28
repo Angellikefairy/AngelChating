@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import {Vue,Component} from "vue-property-decorator";
-import {modifyNotification,getAgentPermission} from "@/service/notification.service"
+import {modifyNotification,getAgentPermission} from "@/service/notification.service";
+import {showMessage} from "@/util/util";
 
 
 @Component
@@ -38,20 +39,12 @@ export default class Notification extends Vue {
     async switchNotification() {
         let notifiState = this.notification;
         if(getAgentPermission() !== 'granted' && notifiState === false) {
-            this.$message({
-                type: 'warning',
-                message: '浏览器通知功能未开启，请先允许浏览器进行通知！',
-                duration: 0,
-                showClose: true
-            })
+            showMessage(this,'warning','浏览器通知功能未开启，请先允许浏览器进行通知！',0,true);
             return;
         }
         notifiState = !notifiState;
         await modifyNotification(notifiState);
-        this.$message({
-            type: notifiState ? 'success' : 'info',
-            message: notifiState ? '桌面消息通知已开启' :'桌面消息通知已关闭'
-        })
+        showMessage(this,(`${notifiState ? 'success' : 'info'}` as 'success'|'info'),`${notifiState ? '桌面消息通知已开启' :'桌面消息通知已关闭'}`)
     }
 }
 </script>

@@ -57,6 +57,11 @@ export function getDatetimeMes(datetime: Date): DatetimeMes<number> {
     }
 }
 
+/**
+ * 使用正则配对消息中的表情
+ * @param message 
+ * @param messageContent 
+ */
 export function resolveEmoji(message,messageContent) {
     const matchEmojiItems = message[messageContent].match(/#\{(.*?)\}/g);
     if(matchEmojiItems) {
@@ -70,3 +75,27 @@ export function resolveEmoji(message,messageContent) {
     return message[messageContent];
 }
 
+/**
+ * 发出消息提示（封装this.$message({})）
+ * @param app 
+ * @param type 
+ * @param message 
+ * @param duration 
+ * @param showClose 
+ */
+export function showMessage(
+    app,
+    type: 'success'|'warning'|'info'|'error',
+    message: string,
+    duration: number = 2000,
+    showClose: boolean = false,
+    onClose?: Function
+) {
+    app.$message({
+        type,
+        message,
+        duration,
+        showClose,
+        onClose
+    })
+}

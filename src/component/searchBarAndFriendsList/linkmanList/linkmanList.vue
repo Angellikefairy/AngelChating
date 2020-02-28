@@ -12,6 +12,7 @@ import {Vue,Component,Watch} from "vue-property-decorator";
 import linkmans from "./linkmans.vue";
 import {getFriendsList,getGroupList} from "@/api/api";
 import { mapState } from 'vuex';
+import {showMessage} from "@/util/util";
 
 
 @Component({
@@ -58,12 +59,8 @@ export default class LinkmanList extends Vue {
         })
     }
 
-    showWarning() {
-        this.$message({
-            type: 'warning',
-            message: '联系人数据获取失败',
-            showClose: true
-        })        
+    showWarning() {      
+        showMessage(this,'warning','联系人数据获取失败',3000,true);
     }
 
 
