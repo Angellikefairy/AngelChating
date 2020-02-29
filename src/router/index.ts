@@ -21,6 +21,10 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('../pages/Register.vue')
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
