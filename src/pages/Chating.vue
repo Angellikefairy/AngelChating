@@ -96,7 +96,7 @@ export default class Chating extends Vue {
           return;
         }
       }
-      if(!supportNotification) {
+      if(!supportNotification()) {
         showMessage(this,'warning','当前浏览器不支持桌面消息通知。为了您更好的用户体验，推荐使用Chrome和Firefox',0,true);
       }
       else {

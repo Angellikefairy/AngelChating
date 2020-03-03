@@ -34,8 +34,6 @@ npm run start
 
 * Github: [@Angellikefairy](https://github.com/Angellikefairy)
 
-* 个人博客: https://angellikefairy.github.io/archives/
-
 ## Show your support
 
 Give a ⭐️ if this project helped you!
